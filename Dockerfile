@@ -1,11 +1,12 @@
 FROM python:3.9-slim
 
-WORKDIR /traefik_dicovery/app
+WORKDIR /app
 
 ARG HOMEPAGE_PATH
+ARG TRAEFIK_PATH
 
-COPY ./src /traefik_dicovery/app
-COPY requirements.txt /traefik_dicovery/app
+COPY ./src /app
+COPY requirements.txt /app
 
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 

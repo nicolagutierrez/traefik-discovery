@@ -12,6 +12,7 @@ icons = {
 }
 
 homepage_path = os.getenv("HOMEPAGE_PATH", "homepage/config/services.yaml")
+traefik_path = os.getenv("TRAEFIK_PATH", "http://web1.elemento.cloud:8080/api/http/routers")
 pattern = r"Host\([^)]*\)"
 app = Flask(__name__)
 
@@ -33,9 +34,7 @@ def homepage_update():
         with open(str(homepage_path), "r") as yaml_file:
             data = yaml.safe_load(yaml_file)
 
-        response = requests.get(
-            "http://web1.elemento.cloud:8080/api/http/routers"
-        )  # ToDo: generalize the URL of traefik
+        response = requests.get(str(traefik_path))
 
         routers = response.json()
         if data[0]["Services"] == None:
@@ -70,6 +69,6 @@ def homepage_update():
 
 
 ##* APP (just for testing purpose - use flask run instead) *##
-if __name__ == "__main__":
-    # app.run(port=5001, debug=True)
-    homepage_update()
+# if __name__ == "__main__":
+#     # app.run(port=5001, debug=True)
+#     homepage_update()
