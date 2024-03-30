@@ -32,6 +32,9 @@ def homepage_update():
     )  # ToDo: generalize the URL of traefik
 
     routers = response.json()
+    if data[0]["Services"] == None:
+        data[0]["Services"] = []
+
     keys = [list(service.keys())[0] for service in data[0]["Services"]]
     for router in routers:
         name = router["name"].split("@")[0]
@@ -50,7 +53,7 @@ def homepage_update():
                 }
             )
 
-    with open("test.yaml", "w") as yaml_file:
+    with open(str(homepage_path), "w") as yaml_file:
         yaml.dump(data, yaml_file)
 
 
